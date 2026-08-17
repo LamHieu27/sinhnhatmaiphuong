@@ -1,0 +1,13 @@
+{
+  "name": "sn-birthday-website",
+  "version": "1.0.0",
+  "description": "Website chúc mừng sinh nhật đẹp, hiện đại, bảo mật mật khẩu và tối ưu cho Vercel",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "vercel dev"
+  },
+  "keywords": ["birthday", "gift", "vercel", "responsive"],
+  "author": "",
+  "license": "MIT"
+}

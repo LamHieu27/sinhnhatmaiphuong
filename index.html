@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng Sinh Nhật! 🎂✨</title>
+
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="Trang web chúc mừng sinh nhật đặc biệt dành riêng cho bạn!">
+  <meta name="theme-color" content="#ec4899">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Dancing Script -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Nền hiệu ứng hiệu ứng hạt lấp lánh (Background Particle Canvas) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ========================================== -->
+  <!-- 1. MÀN HÌNH ĐĂNG NHẬP (LOCK SCREEN)       -->
+  <!-- ========================================== -->
+  <div id="lock-screen" class="lock-screen">
+    <div class="lock-card">
+      <div class="gift-icon-wrapper">
+        <div class="gift-icon">🎁</div>
+        <div class="pulse-ring"></div>
+      </div>
+      <h1 class="lock-title">Trang Web Bí Mật ✨</h1>
+      <p class="lock-subtitle">Nhập mật khẩu để khám phá món quà sinh nhật đặc biệt dành riêng cho bạn!</p>
+
+      <form id="login-form" autocomplete="off" onsubmit="return false;">
+        <div class="input-group">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input type="password" id="password-input" placeholder="Nhập mật khẩu ở đây..." required autofocus>
+          <button type="button" id="toggle-password-btn" title="Hiện/Ẩn mật khẩu">
+            <i class="fa-solid fa-eye" id="eye-icon"></i>
+          </button>
+        </div>
+
+        <!-- Thông báo lỗi -->
+        <div id="error-msg" class="error-msg hidden">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span>Mật khẩu không đúng. Vui lòng thử lại!</span>
+        </div>
+
+        <button type="submit" id="unlock-btn" class="btn btn-primary btn-block">
+          <i class="fa-solid fa-key"></i> Mở Khóa ✨
+        </button>
+      </form>
+
+      <div class="hint-box">
+        <button id="hint-toggle-btn" class="hint-btn">
+          <i class="fa-regular fa-lightbulb"></i> Gợi ý mật khẩu?
+        </button>
+        <p id="hint-text" class="hint-text hidden">
+          💡 Gợi ý mặc định: <strong>1808</strong> (Bạn có thể đổi mật khẩu này trong file cấu hình/code).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. TRANG NỘI DUNG (MAIN CONTENT)           -->
+  <!-- ========================================== -->
+  <div id="main-content" class="main-content hidden">
+
+    <!-- Nhạc nền Widget (Floating Music Controller) -->
+    <div class="music-player-widget">
+      <button id="music-toggle-btn" class="music-btn" title="Bật/Tắt Nhạc nền">
+        <i class="fa-solid fa-music music-icon spinning"></i>
+        <span class="music-label">Nhạc Sinh Nhật</span>
+      </button>
+      <audio id="bg-music" loop preload="auto">
+        <!-- Đổi file nhạc tại đây (Có thể dùng đường dẫn MP3 online hoặc trong thư mục assets/audio/happy-birthday.mp3) -->
+        <source
+          src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a2ef04.mp3?filename=happy-birthday-to-you-piano-10729.mp3"
+          type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+      </audio>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="badge-tag">🎉 Happy Birthday ✨</div>
+        <h1 class="hero-title">Chúc Mừng Sinh Nhật <span class="highlight-text">Châu(Chou)</span>! 🥳🎂</h1>
+        <p class="hero-subtitle">Mỗi năm chỉ có một lần, thế nên hãy tận hưởng nhé!</p>
+
+        <!-- BÁNH SINH NHẬT TƯƠNG TÁC -->
+        <div class="cake-container">
+          <div class="birthday-cake" id="birthday-cake" title="Nhấn vào bánh để thổi nến và bắn pháo hoa!">
+            <div class="candle">
+              <div class="flame" id="flame"></div>
+            </div>
+            <div class="cake-tier tier-top"></div>
+            <div class="cake-tier tier-middle"></div>
+            <div class="cake-tier tier-bottom"></div>
+          </div>
+          <p class="cake-hint"><i class="fa-solid fa-hand-pointer"></i> Chạm/Click vào chiếc bánh để thổi nến & bắn pháo
+            hoa!</p>
+        </div>
+
+        <div class="hero-actions">
+          <button id="celebrate-btn" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Bắn Pháo Hoa 🎉
+          </button>
+          <a href="#wishes-section" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-envelope-open-text"></i> Xem Lời Chúc
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: LỜI NHẮN NHỦ CHÂN THÀNH -->
+    <section id="wishes-section" class="section wishes-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fa-solid fa-heart"></i> Lời Nhắn Gửi Dành Cho Bạn</h2>
+          <p class="section-desc">Một chút tâm tư và những lời chúc tốt đẹp nhất dành tặng bạn trong ngày đặc biệt này
+          </p>
+        </div>
+
+        <div class="letter-card">
+          <div class="letter-stamp">🎂</div>
+          <h3 class="letter-heading">Gửi người em hơi thân!</h3>
+          <div class="letter-body">
+            <p>
+              Hôm nay là một ngày vô cùng đặc biệt — ngày em chính thức bước sang một tuổi mới rực rỡ hơn! 🌟
+            </p>
+            <p>
+              Chúc em sẽ gặp thật nhiều may mắn, ngày càng xinh đẹp đạt được mọi mục tiêu đề ra và lúc nào cũng luôn
+              mỉm cười hạnh phúc!
+            </p>
+            <p>
+              Chúc cho chặng đường phía trước dù có như thế nào, hãy luôn tin tưởng vào bản thân, điều tốt đẹp nhất
+              chắc
+              chắn sẽ đến! 🥂✨
+            </p>
+          </div>
+          <div class="letter-footer">
+            <span>Thân mến,</span>
+            <strong class="signature">Híu</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: KHOẢNH KHẮC KỶ NIỆM (PHOTO GALLERY) -->
+    <section class="section gallery-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fa-solid fa-images"></i> Khoảnh Khắc Đáng Nhớ</h2>
+          <p class="section-desc">Những tấm hình kỷ niệm tuyệt đẹp theo thời gian</p>
+        </div>
+
+        <div class="gallery-grid">
+
+          <!-- THẺ ẢNH 1 -->
+          <div class="gallery-item" data-src="images/Picture1.png">
+            <div class="gallery-card">
+              <img src="images/Picture1.png" alt="Khoảnh khắc 1" loading="lazy">
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus gallery-icon"></i>
+                <div class="gallery-caption">
+                  <h4>Kỷ Niệm Rạng Rỡ 🎈</h4>
+                  <p>Khoảnh khắc tuyệt vời bên bạn bè</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- THẺ ẢNH 2 -->
+          <div class="gallery-item" data-src="images/Picture2.png">
+            <div class="gallery-card">
+              <img src="images/Picture2.png" alt="Khoảnh khắc 2" loading="lazy">
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus gallery-icon"></i>
+                <div class="gallery-caption">
+                  <h4>Nụ Cười Ngọt Ngào ✨</h4>
+                  <p>Luôn giữ niềm vui trong tim</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- THẺ ẢNH 3 -->
+          <div class="gallery-item" data-src="images/Picture3.png">
+            <div class="gallery-card">
+              <img src="images/Picture3.png" alt="Khoảnh khắc 3" loading="lazy">
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus gallery-icon"></i>
+                <div class="gallery-caption">
+                  <h4>Kỷ Niệm Đáng Nhớ 🍰</h4>
+                  <p>Đong đầy hạnh phúc và tiếng cười</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- THẺ ẢNH 4 -->
+          <div class="gallery-item" data-src="images/Picture4.png">
+            <div class="gallery-card">
+              <img src="images/Picture4.png" alt="Khoảnh khắc 4" loading="lazy">
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus gallery-icon"></i>
+                <div class="gallery-caption">
+                  <h4>Chào Tuổi Mới Rực Rỡ 🌟</h4>
+                  <p>Chúc bạn mọi ước mơ thành hiện thực</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="gallery-tip">💡 <em>Mẹo:</em> Bạn có thể dễ dàng thay thế hình ảnh bằng ảnh của bạn trong thư mục
+          <code>assets/images/</code>.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container text-center">
+        <p>Made with ❤️ specially for your Birthday!</p>
+        <p class="footer-sub">Chúc bạn một ngày sinh nhật thật trọn vẹn và ý nghĩa ✨</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- LIGHTBOX MODAL ĐỂ XEM ẢNH PHÓNG TO -->
+  <div id="lightbox-modal" class="lightbox-modal hidden">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <img class="lightbox-img" id="lightbox-img" alt="Xem ảnh phóng to">
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+
+  <!-- JavaScript Code -->
+  <script src="script.js"></script>
+</body>
+
+</html>
