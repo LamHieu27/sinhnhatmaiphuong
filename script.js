@@ -9,7 +9,9 @@ const CONFIG = {
   // Mật khẩu tĩnh khi chạy Static (GitHub Pages, v.v.). Mặc định là: "2006"
   // SHA-256 hash của "2006" là: "15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225"
   // Hoặc bạn có thể dùng chuỗi dạng văn bản thường bên dưới nếu muốn chỉnh sửa đơn giản:
-  FALLBACK_PASSWORD: "1808",
+  FALLBACK_PASSWORD: "3008",
+
+
 
   // Tự động phát nhạc khi mở khóa (true / false)
   AUTO_PLAY_MUSIC: true
@@ -207,23 +209,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function triggerConfetti() {
     if (typeof confetti === 'function') {
-      // Pháo hoa góc trái
+      // Pháo hoa góc trái với màu Hoa Mai vàng & Hoa Phượng đỏ
       confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6, x: 0.2 }
+        particleCount: 90,
+        spread: 80,
+        origin: { y: 0.6, x: 0.2 },
+        colors: ['#fbbf24', '#f59e0b', '#ef4444', '#f43f5e', '#ec4899', '#a855f7', '#ffffff']
       });
       // Pháo hoa góc phải
       confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6, x: 0.8 }
+        particleCount: 90,
+        spread: 80,
+        origin: { y: 0.6, x: 0.8 },
+        colors: ['#fbbf24', '#f59e0b', '#ef4444', '#f43f5e', '#ec4899', '#a855f7', '#ffffff']
       });
     }
   }
 
   // --------------------------------------------------
-  // 6. THẢ TIM TƯƠNG TÁC
+  // 6. THẢ TIM & HOA MAI HOA PHƯỢNG TƯƠNG TÁC
   // --------------------------------------------------
   if (heartBtn && heartCount) {
     heartBtn.addEventListener('click', (e) => {
@@ -234,26 +238,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createFloatingHeart(x, y) {
-    const heart = document.createElement('div');
-    heart.innerHTML = '❤️';
-    heart.style.position = 'fixed';
-    heart.style.left = `${x - 12}px`;
-    heart.style.top = `${y - 12}px`;
-    heart.style.fontSize = `${Math.random() * 20 + 20}px`;
-    heart.style.pointerEvents = 'none';
-    heart.style.zIndex = '9999';
-    heart.style.transition = 'all 1.2s ease-out';
-    document.body.appendChild(heart);
+    createFloatingEmoji(x, y);
+  }
+
+  function createFloatingEmoji(x, y) {
+    const icons = ['🌼', '🌺', '💖', '🥰', '🌸', '✨', '💐', '💗', '🏵️', '🌻', '🥀', '👭'];
+    const emoji = icons[Math.floor(Math.random() * icons.length)];
+    const el = document.createElement('div');
+    el.innerHTML = emoji;
+    el.style.position = 'fixed';
+    el.style.left = `${x - 15}px`;
+    el.style.top = `${y - 15}px`;
+    el.style.fontSize = `${Math.random() * 20 + 22}px`;
+    el.style.pointerEvents = 'none';
+    el.style.zIndex = '9999';
+    el.style.transition = 'all 1.4s cubic-bezier(0.16, 1, 0.3, 1)';
+    el.style.filter = 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))';
+    document.body.appendChild(el);
 
     setTimeout(() => {
-      heart.style.transform = `translate(${(Math.random() - 0.5) * 100}px, -150px) scale(1.5)`;
-      heart.style.opacity = '0';
+      el.style.transform = `translate(${(Math.random() - 0.5) * 120}px, -180px) rotate(${(Math.random() - 0.5) * 80}deg) scale(1.4)`;
+      el.style.opacity = '0';
     }, 20);
 
     setTimeout(() => {
-      heart.remove();
-    }, 1250);
+      el.remove();
+    }, 1450);
   }
+
+  // Bấm vào bất kỳ đâu trên màn hình để thả hoa & tim sinh động
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('input, button, a, .gallery-item, .birthday-cake')) {
+      createFloatingEmoji(e.clientX, e.clientY);
+    }
+  });
 
   // --------------------------------------------------
   // 7. GALLERY LIGHTBOX MODAL
@@ -287,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------
-  // 8. KHỞI TẠO CANVAS PARTICLES (HẠT SAO NỀN)
+  // 8. KHỞI TẠO CANVAS PARTICLES (NỀN HẠT HOA & SAO LẤP LÁNH)
   // --------------------------------------------------
   function initBackgroundParticles() {
     const canvas = document.getElementById('bg-canvas');
@@ -303,23 +321,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const particles = [];
-    const particleCount = 45;
+    const particleCount = 55;
+    const colors = ['#fbbf24', '#f59e0b', '#ef4444', '#f43f5e', '#ec4899', '#ffffff'];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 2 + 1,
-        alpha: Math.random(),
-        speed: Math.random() * 0.5 + 0.2
+        radius: Math.random() * 2.5 + 1,
+        alpha: Math.random() * 0.7 + 0.3,
+        speed: Math.random() * 0.6 + 0.2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        swing: Math.random() * 0.02
       });
     }
 
+    let angle = 0;
     function draw() {
       ctx.clearRect(0, 0, width, height);
+      angle += 0.01;
 
       particles.forEach(p => {
         p.y -= p.speed;
+        p.x += Math.sin(angle) * p.swing;
+
         if (p.y < 0) {
           p.y = height;
           p.x = Math.random() * width;
@@ -327,9 +352,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = '#f472b6';
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = p.color;
         ctx.fill();
       });
 

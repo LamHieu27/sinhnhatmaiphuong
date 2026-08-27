@@ -584,6 +584,115 @@ body {
   color: var(--accent-color);
 }
 
+/* THOUGHTS SECTION */
+.thoughts-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--glass-shadow);
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.thoughts-body p {
+  font-size: 1.05rem;
+  color: #e2e8f0;
+  margin-bottom: 1.2rem;
+  line-height: 1.8;
+}
+
+/* STYLED POEM CARD FOR "TẠM KHÉP TRANG THƯ" */
+.poem-card {
+  position: relative;
+  margin: 2rem 0;
+  padding: 2.2rem 2rem 1.8rem;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(139, 92, 246, 0.15) 50%, rgba(245, 158, 11, 0.12) 100%);
+  border: 1.5px solid rgba(244, 114, 182, 0.4);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.15), inset 0 0 25px rgba(244, 114, 182, 0.08);
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.poem-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(244, 114, 182, 0.7);
+  box-shadow: 0 15px 35px rgba(236, 72, 153, 0.25), inset 0 0 35px rgba(244, 114, 182, 0.15);
+}
+
+.poem-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #f472b6, #fbbf24, #c084fc, #f472b6);
+  background-size: 200% 100%;
+  animation: poemGradientShift 4s ease infinite;
+}
+
+@keyframes poemGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.poem-decor {
+  font-size: 1.25rem;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.6rem;
+  opacity: 0.9;
+}
+
+.poem-quote-mark {
+  font-size: 1.6rem;
+  color: rgba(244, 114, 182, 0.6);
+  margin-bottom: 0.8rem;
+}
+
+.poem-verses {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.poem-line {
+  font-family: var(--font-handwriting);
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem) !important;
+  font-weight: 700;
+  color: #ffffff !important;
+  line-height: 1.6 !important;
+  margin-bottom: 0 !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 12px rgba(244, 114, 182, 0.4);
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.poem-line:hover {
+  color: #fce7f3 !important;
+  transform: scale(1.02);
+}
+
+.poem-hearts {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.5rem;
+}
+
+.thoughts-gallery {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--card-border);
+}
+
+.thoughts-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
 /* GALLERY GRID */
 .gallery-grid {
   display: grid;
