@@ -1,8 +1,8 @@
 // Vercel Serverless Function kiểm tra mật khẩu an toàn từ phía Server
 // Mật khẩu có thể cài đặt qua Vercel Environment Variable "BIRTHDAY_PASSWORD"
-// Mặc định là: 2006 (bạn có thể đổi trực tiếp dòng dưới hoặc tạo biến môi trường trên Vercel)
+// Mặc định là: 3008 (bạn có thể đổi trực tiếp dòng dưới hoặc tạo biến môi trường trên Vercel)
 
-const DEFAULT_PASSWORD = process.env.BIRTHDAY_PASSWORD || "1808";
+const DEFAULT_PASSWORD = process.env.BIRTHDAY_PASSWORD || "3008";
 
 module.exports = async (req, res) => {
   // Đặt header CORS để gọi API nếu cần
